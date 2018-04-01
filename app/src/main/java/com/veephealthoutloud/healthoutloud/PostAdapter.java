@@ -3,9 +3,12 @@ package com.veephealthoutloud.healthoutloud;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.veephealthoutloud.healthoutloud.Interfaces.IPost;
@@ -25,6 +28,7 @@ public class PostAdapter extends BaseAdapter {
         TextView messageTextView;
         TextView dateTextView;
         TextView feelingsTextView;
+        Button openMenuButton;
     }
 
     private Context mContext;
@@ -64,6 +68,7 @@ public class PostAdapter extends BaseAdapter {
             viewHolder.dateTextView = view.findViewById(R.id.post_date);
             viewHolder.messageTextView = view.findViewById(R.id.post_message);
             viewHolder.feelingsTextView = view.findViewById(R.id.post_feelings);
+            viewHolder.openMenuButton = view.findViewById(R.id.open_post_menu_button);
             view.setTag(viewHolder);
         }
         else{
@@ -75,6 +80,15 @@ public class PostAdapter extends BaseAdapter {
         viewHolder.dateTextView.setText(DateFormat.getDateTimeInstance().format(post.GetDate()));
         viewHolder.messageTextView.setText(post.GetMessage());
         viewHolder.feelingsTextView.setText(GetFeelingsString(post.GetFeelings()));
+        viewHolder.openMenuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu popupMenu = new PopupMenu(mContext, view);
+                MenuInflater inflater = popupMenu.getMenuInflater();
+                inflater.inflate(R.menu.newsfeed_posts_popup, popupMenu.getMenu());
+                popupMenu.show();
+            }
+        });
 
         view.setBackgroundColor(Color.WHITE);
 
