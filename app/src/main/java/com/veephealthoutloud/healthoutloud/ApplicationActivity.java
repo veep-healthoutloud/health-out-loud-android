@@ -8,7 +8,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
 /**
- * Created by Arjun Mittal on 5/13/2018.
+ *  Singleton class
+ *  Used to ensure volley connection lasts the lifetime of app
+ *  Sets up RequestQueue
  */
 
 public class ApplicationActivity extends Application {
@@ -26,7 +28,7 @@ public class ApplicationActivity extends Application {
     /**
      * A singleton instance of the application class for easy access in other places
      */
-    private static ApplicationActivity mNetworkManagerIntstance;
+    private static ApplicationActivity mNetworkManagerInstance;
 
     @Override
     public void onCreate()
@@ -34,14 +36,14 @@ public class ApplicationActivity extends Application {
         super.onCreate();
 
         // initialize singleton
-        mNetworkManagerIntstance = this;
+        mNetworkManagerInstance = this;
     }
 
     /**
      * @return ApplicationController singleton instance
      */
     public static synchronized ApplicationActivity getInstance() {
-        return mNetworkManagerIntstance;
+        return mNetworkManagerInstance;
     }
 
     /**
