@@ -34,13 +34,16 @@ public class PostAdapter extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mInflater;
     private ArrayList<IPost> mDataSource;
+    private int mMenuLayout;
 
-    public PostAdapter(Context context, ArrayList<IPost> posts) {
+    public PostAdapter(Context context, ArrayList<IPost> posts, int menuLayout) {
 
         mContext = context;
         mDataSource = posts;
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mMenuLayout = menuLayout;
     }
+
     @Override
     public int getCount() {
         return mDataSource.size();
@@ -85,7 +88,7 @@ public class PostAdapter extends BaseAdapter {
             public void onClick(View view) {
                 PopupMenu popupMenu = new PopupMenu(mContext, view);
                 MenuInflater inflater = popupMenu.getMenuInflater();
-                inflater.inflate(R.menu.newsfeed_posts_popup, popupMenu.getMenu());
+                inflater.inflate(mMenuLayout, popupMenu.getMenu());
                 popupMenu.show();
             }
         });

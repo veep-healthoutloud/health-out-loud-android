@@ -62,7 +62,7 @@ public class NewsfeedFragment extends Fragment implements View.OnClickListener{
         // Create list of posts
         ArrayList<IPost> postMessages = GetPosts();
 
-        postAdapter = new PostAdapter(getContext(), postMessages);
+        postAdapter = new PostAdapter(getContext(), postMessages, R.menu.newsfeed_posts_popup);
     }
 
     @Override
