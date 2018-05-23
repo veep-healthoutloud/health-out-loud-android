@@ -10,9 +10,12 @@ import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupMenu;
+import android.widget.Spinner;
 
 import com.veephealthoutloud.healthoutloud.Classes.Post;
 import com.veephealthoutloud.healthoutloud.CreatePostActivity;
@@ -32,10 +35,12 @@ import java.util.Date;
  * Use the {@link NewsfeedFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NewsfeedFragment extends Fragment implements View.OnClickListener{
+public class NewsfeedFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
+    private Spinner feelingsSpinner;
     private ListView postListView;
     private PostAdapter postAdapter;
+    private ArrayAdapter<String> feelingsAdapter;
     private OnNewsfeedFragmentInteractionListener mListener;
 
     public NewsfeedFragment() {
@@ -59,9 +64,13 @@ public class NewsfeedFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        feelingsAdapter = new ArrayAdapter<>(getContext(),
+                android.R.layout.simple_spinner_item, GetFeelings());
+        feelingsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         // Create list of posts
         ArrayList<IPost> postMessages = GetPosts();
-
         postAdapter = new PostAdapter(getContext(), postMessages, R.menu.newsfeed_posts_popup);
     }
 
@@ -73,12 +82,19 @@ public class NewsfeedFragment extends Fragment implements View.OnClickListener{
         View view = inflater.inflate(R.layout.fragment_newsfeed, container, false);
         FloatingActionButton addPostButton = view.findViewById(R.id.add_post_button);
         addPostButton.setOnClickListener(this);
+
         return view;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Create dropdown menu for feelings
+        feelingsSpinner = view.findViewById(R.id.feelings_spinner);
+        feelingsSpinner.setAdapter(feelingsAdapter);
+        feelingsSpinner.setOnItemSelectedListener(this);
+
         postListView = view.findViewById(R.id.newsfeed_post_list_view);
         postListView.setAdapter(postAdapter);
     }
@@ -107,6 +123,16 @@ public class NewsfeedFragment extends Fragment implements View.OnClickListener{
                 AddPostButtonOnClick();
                 break;
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        // TODO: implement for when the user chooses a feeling to filter posts by
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+        // TODO: implement for when the user wants to view all posts
     }
 
     /**
@@ -148,5 +174,14 @@ public class NewsfeedFragment extends Fragment implements View.OnClickListener{
         list.add(post2);
         list.add(post3);
         return list;
+    }
+
+    private ArrayList<String> GetFeelings(){
+        // Placeholder for now, add call to api later
+        ArrayList<String> feelings = new ArrayList<>();
+        feelings.add("sad");
+        feelings.add("frustrated");
+        feelings.add("angry");
+        return feelings;
     }
 }

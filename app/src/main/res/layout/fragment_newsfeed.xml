@@ -10,13 +10,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <Spinner
+            android:id="@+id/feelings_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme" />
+            android:layout_marginBottom="@dimen/text_margin"
+            android:layout_marginLeft="@dimen/text_margin"
+            android:background="@android:color/background_light" />
 
         <RelativeLayout
             android:layout_width="match_parent"
