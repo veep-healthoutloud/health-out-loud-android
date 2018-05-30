@@ -7,6 +7,12 @@
     android:orientation="vertical">
 
 
+    <Button
+        android:id="@+id/open_post_menu_button"
+        android:layout_width="31dp"
+        android:layout_height="34dp"
+        android:layout_gravity="right" />
+
     <TextView
         android:id="@+id/post_date"
         android:layout_width="match_parent"
