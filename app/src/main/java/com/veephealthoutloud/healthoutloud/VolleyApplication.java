@@ -13,7 +13,7 @@ import com.android.volley.toolbox.Volley;
  *  Sets up RequestQueue
  */
 
-public class ApplicationActivity extends Application {
+public class VolleyApplication extends Application {
 
     /**
      * Log or request TAG
@@ -28,7 +28,7 @@ public class ApplicationActivity extends Application {
     /**
      * A singleton instance of the application class for easy access in other places
      */
-    private static ApplicationActivity mNetworkManagerInstance;
+    private static VolleyApplication mNetworkManagerInstance;
 
     @Override
     public void onCreate()
@@ -42,7 +42,7 @@ public class ApplicationActivity extends Application {
     /**
      * @return ApplicationController singleton instance
      */
-    public static synchronized ApplicationActivity getInstance() {
+    public static synchronized VolleyApplication getInstance() {
         return mNetworkManagerInstance;
     }
 

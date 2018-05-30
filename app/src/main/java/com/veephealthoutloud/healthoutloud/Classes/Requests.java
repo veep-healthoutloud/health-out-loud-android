@@ -6,8 +6,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 
-import com.veephealthoutloud.healthoutloud.ApplicationActivity;
+import com.veephealthoutloud.healthoutloud.VolleyApplication;
 import com.veephealthoutloud.healthoutloud.Classes.Post;
+import com.veephealthoutloud.healthoutloud.VolleyApplication;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,12 +29,9 @@ public class Requests {
 
     private static String endpoint = "http://healthoutloud-api.herokuapp.com";
 
-    private ArrayList<Post> processJSONPosts(JSONArray posts)
-    {
-
+    private ArrayList<Post> processJSONPosts(JSONArray posts) {
         ArrayList<Post> allPosts = new ArrayList<>();
         Post _post;
-
         for(int index = 0; index < posts.length(); index++) {
 
             try {
@@ -65,17 +63,12 @@ public class Requests {
 
     }
 
-    public void getAllPosts()
-    {
-
+    public void getAllPosts() {
         final String postsURL = endpoint + "\\posts";
-
         JsonArrayRequest allPosts = new JsonArrayRequest(postsURL, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-
                 JSONObject jO = null;
-
                 for(int index = 0; index < response.length(); index++) {
                     try {
                         jO = response.getJSONObject(index);
@@ -84,7 +77,6 @@ public class Requests {
                         System.out.print("Unexpected JSON exception");
                     }
                 }
-
                 // TODO: Process JSONArray Response
                 // NOTE: process JSONResponse is an example of how we could process response
             }
@@ -94,9 +86,6 @@ public class Requests {
                 // TODO: Error Handler
             }
         });
-
-        ApplicationActivity.getInstance().addToRquestQueue(allPosts);
-
+        VolleyApplication.getInstance().addToRquestQueue(allPosts);
     }
-
 }
