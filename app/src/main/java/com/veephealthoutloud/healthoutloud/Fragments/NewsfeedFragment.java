@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
@@ -17,12 +18,23 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.veephealthoutloud.healthoutloud.Classes.Post;
 import com.veephealthoutloud.healthoutloud.CreatePostActivity;
 import com.veephealthoutloud.healthoutloud.Interfaces.IPost;
 import com.veephealthoutloud.healthoutloud.PostAdapter;
 import com.veephealthoutloud.healthoutloud.R;
+import com.veephealthoutloud.healthoutloud.VolleyApplication;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -167,6 +179,8 @@ public class NewsfeedFragment extends Fragment implements View.OnClickListener, 
         feelings.add("sad");
         feelings.add("frustrated");
 
+        getAllPosts();
+
         IPost post1 = new Post("postID", "message", new Date(), feelings);
         IPost post2 = new Post("postID2", "message2", new Date(), feelings);
         IPost post3 = new Post("postID3", "message3", new Date(), feelings);
@@ -174,6 +188,67 @@ public class NewsfeedFragment extends Fragment implements View.OnClickListener, 
         list.add(post2);
         list.add(post3);
         return list;
+    }
+
+    public void getAllPosts() {
+        final String postsURL = "http://healthoutloud-api.herokuapp.com/posts";
+
+        JsonArrayRequest allPosts = new JsonArrayRequest
+                (Request.Method.GET,
+                        postsURL,
+                        null,
+                        new Response.Listener<JSONArray>() {
+                            @Override
+                            public void onResponse(JSONArray response) {
+
+                                //ParsePosts(response);
+                                Log.d("Listener", "here");
+                                Log.d("Listener response", response.toString());
+                                Log.d("About to enter", "entered");
+                                ParsePosts(response);
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Error Handler", "here");
+                        // TODO: Error Handler
+                    }
+                });
+
+        VolleyApplication.getInstance(getActivity().getApplicationContext()).addToRequestQueue(allPosts);
+    }
+
+    private void ParsePosts(JSONArray postsJSONArray) {
+
+
+        for(int index = 0; index < postsJSONArray.length(); index++) {
+            try {
+                JSONObject JSONPost = (JSONObject) postsJSONArray.get(index);
+                JSONArray JSONFeelings = JSONPost.getJSONArray("feelings");
+
+                ArrayList<String> postFeelings = new ArrayList<>();
+                for (int feelingsIndex = 0; feelingsIndex < JSONFeelings.length(); feelingsIndex++) {
+                    postFeelings.add((String) JSONFeelings.get(feelingsIndex));
+                }
+
+                String dateStr = JSONPost.getString("date");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+                Date postDate = sdf.parse(dateStr);
+
+                Log.d("name" + index, JSONPost.getString("_id"));
+                Log.d("postBody" + index, JSONPost.getString("postBody"));
+                Log.d("postDate" + index, postDate.toString());
+
+                IPost post = new Post(JSONPost.getString("_id"), JSONPost.getString("postBody"),
+                        postDate, postFeelings);
+
+            } catch (JSONException e) {
+                // TODO: Exception Handler
+            } catch (ParseException p) {
+                // TODO: Exception Handler
+            }
+        }
+
     }
 
     private ArrayList<String> GetFeelings(){

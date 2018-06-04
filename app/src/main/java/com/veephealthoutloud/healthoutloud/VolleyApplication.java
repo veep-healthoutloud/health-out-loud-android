@@ -1,7 +1,7 @@
 package com.veephealthoutloud.healthoutloud;
 
 import android.app.Application;
-import android.text.TextUtils;
+import android.content.Context;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -16,11 +16,6 @@ import com.android.volley.toolbox.Volley;
 public class VolleyApplication extends Application {
 
     /**
-     * Log or request TAG
-     */
-    private static final String TAG = "Healthoutloud";
-
-    /**
      * Global request queue for Volley
      */
     private RequestQueue mRequestQueue;
@@ -28,33 +23,36 @@ public class VolleyApplication extends Application {
     /**
      * A singleton instance of the application class for easy access in other places
      */
-    private static VolleyApplication mNetworkManagerInstance;
+    private static VolleyApplication mInstance;
 
-    @Override
-    public void onCreate()
-    {
-        super.onCreate();
+    /**
+     * Context of singleton class
+     */
+    private static Context mContext;
 
-        // initialize singleton
-        mNetworkManagerInstance = this;
+    /*
+     * Instantiating VolleyApplication
+     */
+    private VolleyApplication(Context context){
+        mContext = context;
+        mRequestQueue = getMRequestQueue();
     }
 
     /**
-     * @return ApplicationController singleton instance
+     * @param context
+     * @return mInstance
      */
-    public static synchronized VolleyApplication getInstance() {
-        return mNetworkManagerInstance;
+    public static synchronized VolleyApplication getInstance(Context context){
+        if(mInstance == null) mInstance = new VolleyApplication(context);
+        return mInstance;
     }
 
     /**
-     * @return The Volley Request queue, the queue will be created if it is null
+     * @return mRequestQueue
+     * the queue will be created if it is null
      */
-    public RequestQueue getmRequestQueue(){
-        //lazy initialize the mRequestQueue
-        if(mRequestQueue == null) {
-            mRequestQueue = Volley.newRequestQueue(getApplicationContext());
-        }
-
+    public RequestQueue getMRequestQueue(){
+        if(mRequestQueue == null) mRequestQueue = Volley.newRequestQueue(mContext.getApplicationContext());
         return mRequestQueue;
     }
 
@@ -62,23 +60,12 @@ public class VolleyApplication extends Application {
      * Adds the specified request to the global queue, if tag is specified
      * then it is used else Default TAG is used.
      */
-    public <T> void addToRequestQueue(Request <T> req, String tag){
-        // set default tag if one is not specified
-        req.setTag(TextUtils.isEmpty(tag) ? TAG: tag);
+    public <T> void addToRequestQueue(Request <T> req){
+        // set default tag
+        req.setTag("Health Out Loud");
 
-        // add request to current queue
-        getmRequestQueue().add(req);
-    }
-
-    /**
-     * Adds the specified request to the global queue using the Default TAG.
-     */
-    public <T> void addToRquestQueue(Request <T> req){
-        // use default tag
-        req.setTag(TAG);
-
-        // add request to current queue
-        getmRequestQueue().add(req);
+        // add reque    st to current queue
+        getMRequestQueue().add(req);
     }
 
     /**
