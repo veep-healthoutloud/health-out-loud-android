@@ -55,7 +55,7 @@ public class MyPostsFragment extends Fragment {
         // Create list of user posts
         ArrayList<IPost> postMessages = GetPosts();
 
-        postAdapter = new PostAdapter(getContext(), postMessages);
+        postAdapter = new PostAdapter(getContext(), postMessages, R.menu.my_posts_popup);
     }
 
     @Override
