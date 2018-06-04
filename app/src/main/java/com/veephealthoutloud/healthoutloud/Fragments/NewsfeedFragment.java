@@ -33,6 +33,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -220,6 +221,7 @@ public class NewsfeedFragment extends Fragment implements View.OnClickListener, 
 
     private void ParsePosts(JSONArray postsJSONArray) {
 
+        ArrayList<IPost> allPosts = new ArrayList<>();
 
         for(int index = 0; index < postsJSONArray.length(); index++) {
             try {
@@ -241,7 +243,8 @@ public class NewsfeedFragment extends Fragment implements View.OnClickListener, 
 
                 IPost post = new Post(JSONPost.getString("_id"), JSONPost.getString("postBody"),
                         postDate, postFeelings);
-
+                allPosts.add(post);
+                
             } catch (JSONException e) {
                 // TODO: Exception Handler
             } catch (ParseException p) {
