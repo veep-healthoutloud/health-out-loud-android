@@ -7,14 +7,11 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.PopupMenu;
 import android.widget.Spinner;
 
 import com.veephealthoutloud.healthoutloud.Classes.Post;
@@ -40,7 +37,7 @@ public class NewsfeedFragment extends Fragment implements View.OnClickListener, 
     private Spinner feelingsSpinner;
     private ListView postListView;
     private PostAdapter postAdapter;
-    private ArrayAdapter<String> feelingsAdapter;
+    private ArrayAdapter<CharSequence> feelingsAdapter;
     private OnNewsfeedFragmentInteractionListener mListener;
 
     public NewsfeedFragment() {
@@ -65,8 +62,8 @@ public class NewsfeedFragment extends Fragment implements View.OnClickListener, 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        feelingsAdapter = new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_spinner_item, GetFeelings());
+        feelingsAdapter = ArrayAdapter.createFromResource(getContext(), R.array.feelings_list,
+                android.R.layout.simple_spinner_dropdown_item);
         feelingsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // Create list of posts
@@ -91,7 +88,7 @@ public class NewsfeedFragment extends Fragment implements View.OnClickListener, 
         super.onViewCreated(view, savedInstanceState);
 
         // Create dropdown menu for feelings
-        feelingsSpinner = view.findViewById(R.id.feelings_spinner);
+        feelingsSpinner = view.findViewById(R.id.newsfeed_feelings_spinner);
         feelingsSpinner.setAdapter(feelingsAdapter);
         feelingsSpinner.setOnItemSelectedListener(this);
 
