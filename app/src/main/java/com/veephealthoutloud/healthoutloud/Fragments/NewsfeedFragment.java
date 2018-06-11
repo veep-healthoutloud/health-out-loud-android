@@ -2,6 +2,7 @@ package com.veephealthoutloud.healthoutloud.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.IpPrefix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,16 +15,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.veephealthoutloud.healthoutloud.Classes.Post;
+import com.veephealthoutloud.healthoutloud.Classes.VolleyRequestsUtils;
 import com.veephealthoutloud.healthoutloud.CreatePostActivity;
 import com.veephealthoutloud.healthoutloud.Interfaces.IPost;
+import com.veephealthoutloud.healthoutloud.Interfaces.VolleyCallback;
 import com.veephealthoutloud.healthoutloud.PostAdapter;
 import com.veephealthoutloud.healthoutloud.R;
-import com.veephealthoutloud.healthoutloud.VolleyApplication;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -78,8 +76,7 @@ public class NewsfeedFragment extends Fragment implements View.OnClickListener, 
         feelingsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // Create list of posts
-        ArrayList<IPost> postMessages = GetPosts();
-        postAdapter = new PostAdapter(getContext(), postMessages, R.menu.newsfeed_posts_popup);
+        GetPosts();
     }
 
     @Override
@@ -167,48 +164,19 @@ public class NewsfeedFragment extends Fragment implements View.OnClickListener, 
         super.onActivityCreated(savedInstanceState);
     }
 
-    private ArrayList<IPost> GetPosts(){
-        // TODO: Change to use request to server when that's set up
-        ArrayList<IPost> list = new ArrayList<>();
-
-        ArrayList<String> feelings = new ArrayList<>();
-        feelings.add("sad");
-        feelings.add("frustrated");
-
-        getAllPosts();
-
-        IPost post1 = new Post("postID", "message", new Date(), feelings);
-        IPost post2 = new Post("postID2", "message2", new Date(), feelings);
-        IPost post3 = new Post("postID3", "message3", new Date(), feelings);
-        list.add(post1);
-        list.add(post2);
-        list.add(post3);
-        return list;
-    }
-
-    public void getAllPosts() {
-        final String postsURL = "http://healthoutloud-api.herokuapp.com/posts";
-
-        JsonArrayRequest allPosts = new JsonArrayRequest
-                (Request.Method.GET,
-                        postsURL,
-                        null,
-                        new Response.Listener<JSONArray>() {
-                            @Override
-                            public void onResponse(JSONArray response) {
-                                ParsePosts(response);
-                            }
-                        }, new Response.ErrorListener() {
+    private void GetPosts(){
+        VolleyRequestsUtils.getAllPosts(getActivity().getApplicationContext(), new VolleyCallback() {
                     @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO: Error Handler
+                    public void onSuccess(JSONArray result) {
+                        ArrayList<IPost> allPosts = ParsePosts(result);
+                        postAdapter = new PostAdapter(getContext(), allPosts, R.menu.newsfeed_posts_popup);
+                        postListView.setAdapter(postAdapter);
                     }
                 });
-
-        VolleyApplication.getInstance(getActivity().getApplicationContext()).addToRequestQueue(allPosts);
     }
 
-    private void ParsePosts(JSONArray postsJSONArray) {
+
+    private ArrayList<IPost> ParsePosts(JSONArray postsJSONArray) {
 
         ArrayList<IPost> allPosts = new ArrayList<>();
 
@@ -236,6 +204,8 @@ public class NewsfeedFragment extends Fragment implements View.OnClickListener, 
                 // TODO: Exception Handler
             }
         }
+
+        return allPosts;
 
     }
 
