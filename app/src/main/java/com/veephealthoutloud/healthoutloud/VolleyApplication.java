@@ -30,7 +30,8 @@ public class VolleyApplication extends Application {
      */
     private static Context mContext;
 
-    /*
+    /**
+     * @param context
      * Instantiating VolleyApplication
      */
     private VolleyApplication(Context context){
@@ -57,18 +58,16 @@ public class VolleyApplication extends Application {
     }
 
     /**
+     * @param req
      * Adds the specified request to the global queue, if tag is specified
      * then it is used else Default TAG is used.
      */
     public <T> void addToRequestQueue(Request <T> req){
-        // set default tag
-        req.setTag("Health Out Loud");
-
-        // add reque    st to current queue
         getMRequestQueue().add(req);
     }
 
     /**
+     * @param tag
      * Cancels all pending requests by the specified TAG, it is important
      * to specify a TAG so that the pending/ongoing requests can be cancelled.*
      */

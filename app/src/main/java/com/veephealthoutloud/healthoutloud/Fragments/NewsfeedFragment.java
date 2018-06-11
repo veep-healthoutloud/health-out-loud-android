@@ -6,16 +6,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.PopupMenu;
 import android.widget.Spinner;
 
 import com.android.volley.Request;
@@ -33,7 +29,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -201,17 +196,11 @@ public class NewsfeedFragment extends Fragment implements View.OnClickListener, 
                         new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray response) {
-
-                                //ParsePosts(response);
-                                Log.d("Listener", "here");
-                                Log.d("Listener response", response.toString());
-                                Log.d("About to enter", "entered");
                                 ParsePosts(response);
                             }
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("Error Handler", "here");
                         // TODO: Error Handler
                     }
                 });
@@ -236,10 +225,6 @@ public class NewsfeedFragment extends Fragment implements View.OnClickListener, 
                 String dateStr = JSONPost.getString("date");
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
                 Date postDate = sdf.parse(dateStr);
-
-                Log.d("name" + index, JSONPost.getString("_id"));
-                Log.d("postBody" + index, JSONPost.getString("postBody"));
-                Log.d("postDate" + index, postDate.toString());
 
                 IPost post = new Post(JSONPost.getString("_id"), JSONPost.getString("postBody"),
                         postDate, postFeelings);
