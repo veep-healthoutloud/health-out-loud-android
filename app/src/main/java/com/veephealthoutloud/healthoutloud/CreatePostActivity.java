@@ -56,16 +56,25 @@ public class CreatePostActivity extends AppCompatActivity {
     public void OnSubmitButtonClick(View view){
         // TODO: Add server call to create a post
 
-        Intent but1 = new Intent(CreatePostActivity.this, MainActivity.class);
-        startActivity(but1);
+        Intent intent = new Intent(CreatePostActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 
     private OnItemSelectedListener GetOnFeelingSelectedListener(){
         return new OnItemSelectedListener() {
 
+            /***
+             * Called when the user selects a feeling to add to the post.
+             * @param adapterView the spinner containing the feeling options
+             * @param view the view for the selected item
+             * @param i the index of the feeling selected
+             * @param l the row id of the feeling selected
+             */
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String feeling = adapterView.getSelectedItem().toString();
+
+                // The first item in the spinner is placeholder text and should not be added
                 if (i != 0 && !selectedFeelings.contains(feeling)){
                     selectedFeelings.add(adapterView.getSelectedItem().toString());
                     selectedFeelingsAdapter.notifyDataSetChanged();
