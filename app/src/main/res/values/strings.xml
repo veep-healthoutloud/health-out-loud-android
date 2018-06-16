@@ -22,7 +22,6 @@
     <string name="nav_settings">Account Settings</string>
     <string name="nav_logout">Logout</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hide_post">Hide Post</string>
     <string name="block_user">Block User</string>
     <string name="report_post">Report Post</string>
@@ -30,13 +29,26 @@
 
     <string-array name="feelings_list">
         <item>(select a feeling)</item>
-        <item>angry</item>
-        <item>sad</item>
-        <item>happy</item>
-        <item>frustrated</item>
-        <item>upset</item>
-        <item>annoyed</item>
-        <item>grateful</item>
+        <item>Amazed</item>
+        <item>Annoyed</item>
+        <item>Anxious</item>
+        <item>Blessed</item>
+        <item>Disappointed</item>
+        <item>Disgusted</item>
+        <item>Embarrassed</item>
+        <item>Grateful</item>
+        <item>Happy</item>
+        <item>Hopeful</item>
+        <item>Jealous</item>
+        <item>Lonely</item>
+        <item>Love</item>
+        <item>Mad</item>
+        <item>Nervous</item>
+        <item>Sad</item>
+        <item>Scared</item>
+        <item>Self-conscious</item>
+        <item>Shocked</item>
+        <item>Unhappy</item>
     </string-array>
 
 </resources>
