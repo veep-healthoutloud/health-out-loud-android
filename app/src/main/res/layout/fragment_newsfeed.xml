@@ -11,12 +11,12 @@
         android:orientation="vertical">
 
         <Spinner
-            android:id="@+id/feelings_spinner"
+            android:id="@+id/newsfeed_feelings_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/text_margin"
             android:layout_marginLeft="@dimen/text_margin"
-            android:background="@android:color/background_light" />
+            android:background="@android:color/background_light"/>
 
         <RelativeLayout
             android:layout_width="match_parent"

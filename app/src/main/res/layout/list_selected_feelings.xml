@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.view.menu.ListMenuItemView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/delete_selected_feeling_button"
+        android:layout_width="19dp"
+        android:layout_height="20dp"
+        android:layout_weight="1"
+        android:background="@android:drawable/ic_delete" />
+
+    <TextView
+        android:id="@+id/selected_feeling_text_view"
+        android:layout_width="372dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+</android.support.v7.view.menu.ListMenuItemView>
