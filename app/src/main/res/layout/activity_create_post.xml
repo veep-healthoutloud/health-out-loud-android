@@ -17,11 +17,22 @@
             android:layout_height="189dp"
             android:layout_margin="20dp"
             android:ems="10"
+            android:hint="Write a post"
             android:inputType="textMultiLine"
             android:selectAllOnFocus="true"
             android:singleLine="false"
             tools:layout_editor_absoluteX="29dp"
             tools:layout_editor_absoluteY="36dp" />
+
+        <ListView
+            android:id="@+id/create_post_activity_selected_feelings_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Spinner
+            android:id="@+id/create_post_feelings_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/create_post_activity_submit_button"

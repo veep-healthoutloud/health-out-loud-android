@@ -46,6 +46,7 @@ public class NewsfeedFragment extends Fragment implements View.OnClickListener, 
     private PostAdapter postAdapter;
     private ArrayAdapter<String> feelingsAdapter;
     private ArrayList<IPost> postsList;
+    private ArrayAdapter<CharSequence> feelingsAdapter;
     private OnNewsfeedFragmentInteractionListener mListener;
 
     public NewsfeedFragment() {
@@ -70,8 +71,8 @@ public class NewsfeedFragment extends Fragment implements View.OnClickListener, 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        feelingsAdapter = new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_spinner_item, GetFeelings());
+        feelingsAdapter = ArrayAdapter.createFromResource(getContext(), R.array.feelings_list,
+                android.R.layout.simple_spinner_dropdown_item);
         feelingsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // Create list of posts
@@ -97,7 +98,7 @@ public class NewsfeedFragment extends Fragment implements View.OnClickListener, 
         super.onViewCreated(view, savedInstanceState);
 
         // Create dropdown menu for feelings
-        feelingsSpinner = view.findViewById(R.id.feelings_spinner);
+        feelingsSpinner = view.findViewById(R.id.newsfeed_feelings_spinner);
         feelingsSpinner.setAdapter(feelingsAdapter);
         feelingsSpinner.setOnItemSelectedListener(this);
 
