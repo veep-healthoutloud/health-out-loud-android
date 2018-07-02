@@ -2,7 +2,6 @@ package com.veephealthoutloud.healthoutloud.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.IpPrefix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -32,7 +31,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -47,6 +45,7 @@ public class NewsfeedFragment extends Fragment implements View.OnClickListener, 
     private ListView postListView;
     private PostAdapter postAdapter;
     private ArrayAdapter<String> feelingsAdapter;
+    private ArrayList<IPost> postsList;
     private OnNewsfeedFragmentInteractionListener mListener;
 
     public NewsfeedFragment() {
@@ -76,6 +75,8 @@ public class NewsfeedFragment extends Fragment implements View.OnClickListener, 
         feelingsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // Create list of posts
+        postsList = new ArrayList<>();
+        postAdapter = new PostAdapter(getContext(), postsList, R.menu.newsfeed_posts_popup);
         GetPosts();
     }
 
@@ -168,9 +169,11 @@ public class NewsfeedFragment extends Fragment implements View.OnClickListener, 
         VolleyRequestsUtils.getAllPosts(getActivity().getApplicationContext(), new VolleyCallback() {
                     @Override
                     public void onSuccess(JSONArray result) {
-                        ArrayList<IPost> allPosts = ParsePosts(result);
-                        postAdapter = new PostAdapter(getContext(), allPosts, R.menu.newsfeed_posts_popup);
-                        postListView.setAdapter(postAdapter);
+                        ArrayList<IPost> newPosts = ParsePosts(result);
+                        for(int i = 0; i < newPosts.size(); i++){
+                            postsList.add(newPosts.get(i));
+                        }
+                        postAdapter.updateResults(postsList);
                     }
                 });
     }
