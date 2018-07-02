@@ -44,7 +44,6 @@ public class NewsfeedFragment extends Fragment implements View.OnClickListener, 
     private Spinner feelingsSpinner;
     private ListView postListView;
     private PostAdapter postAdapter;
-    private ArrayAdapter<String> feelingsAdapter;
     private ArrayList<IPost> postsList;
     private ArrayAdapter<CharSequence> feelingsAdapter;
     private OnNewsfeedFragmentInteractionListener mListener;
