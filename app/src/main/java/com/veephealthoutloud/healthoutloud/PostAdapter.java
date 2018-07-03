@@ -105,4 +105,9 @@ public class PostAdapter extends BaseAdapter {
         }
         return result.toString();
     }
+
+    public void updateResults(ArrayList<IPost> newPosts){
+        mDataSource = newPosts;
+        notifyDataSetChanged();
+    }
 }
