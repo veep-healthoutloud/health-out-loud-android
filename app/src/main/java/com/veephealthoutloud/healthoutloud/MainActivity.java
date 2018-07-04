@@ -77,10 +77,13 @@ MyPostsFragment.OnFragmentInteractionListener{
                         navItemIndex = 1;
                         break;
                     case R.id.nav_settings:
+                        Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+                        startActivity(settingsIntent);
+                        return true;
                     case R.id.nav_logout:
                         // TODO: Have it actually logout
-                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                        startActivity(intent);
+                        Intent logoutIntent = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivity(logoutIntent);
                         return true;
                     default:
                         navItemIndex = 0;

@@ -18,7 +18,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".SignupActivity" />
         <activity
             android:name=".MainActivity"
@@ -26,6 +25,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Progress" />
         <activity android:name=".CreatePostActivity" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings" />
+        <activity android:name=".ChangePasswordActivity">
+        </activity>
     </application>
 
 </manifest>
