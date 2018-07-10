@@ -14,11 +14,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import com.android.volley.VolleyError;
 import com.veephealthoutloud.healthoutloud.Classes.Post;
 import com.veephealthoutloud.healthoutloud.Classes.VolleyRequestsUtils;
 import com.veephealthoutloud.healthoutloud.CreatePostActivity;
 import com.veephealthoutloud.healthoutloud.Interfaces.IPost;
-import com.veephealthoutloud.healthoutloud.Interfaces.VolleyCallback;
+import com.veephealthoutloud.healthoutloud.Interfaces.JSONArrayVolleyCallback;
 import com.veephealthoutloud.healthoutloud.PostAdapter;
 import com.veephealthoutloud.healthoutloud.R;
 
@@ -166,7 +167,7 @@ public class NewsfeedFragment extends Fragment implements View.OnClickListener, 
     }
 
     private void GetPosts(){
-        VolleyRequestsUtils.getAllPosts(getActivity().getApplicationContext(), new VolleyCallback() {
+        VolleyRequestsUtils.getAllPosts(getActivity().getApplicationContext(), new JSONArrayVolleyCallback() {
                     @Override
                     public void onSuccess(JSONArray result) {
                         ArrayList<IPost> newPosts = ParsePosts(result);
@@ -174,6 +175,11 @@ public class NewsfeedFragment extends Fragment implements View.OnClickListener, 
                             postsList.add(newPosts.get(i));
                         }
                         postAdapter.updateResults(postsList);
+                    }
+
+                    @Override
+                    public void onError(VolleyError error){
+                        //TODO Handle error
                     }
                 });
     }

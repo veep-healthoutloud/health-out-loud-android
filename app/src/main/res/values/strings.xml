@@ -26,6 +26,12 @@
     <string name="block_user">Block User</string>
     <string name="report_post">Report Post</string>
     <string name="delete_post">Delete Post</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="could_not_connect_error">Could not connect to network.</string>
+    <string name="wrong_login_error">Wrong email or password.</string>
 
     <string-array name="feelings_list">
         <item>(select a feeling)</item>
