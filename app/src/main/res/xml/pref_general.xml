@@ -1,0 +1,11 @@
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <Preference
+    android:title="@string/title_change_password">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="com.veephealthoutloud.healthoutloud.ChangePasswordActivity"
+            android:targetPackage="com.veephealthoutloud.healthoutloud"
+            android:targetClass="com.veephealthoutloud.healthoutloud.ChangePasswordActivity"/>
+    </Preference>
+</PreferenceScreen>
