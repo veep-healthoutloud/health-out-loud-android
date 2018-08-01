@@ -32,6 +32,8 @@
     <string name="sign_up">Sign Up</string>
     <string name="could_not_connect_error">Could not connect to network.</string>
     <string name="wrong_login_error">Wrong email or password.</string>
+    <string name="password_mismatch">Passwords do not match.</string>
+    <string name="invalid_creds">Invalid Credentials</string>
 
     <string-array name="feelings_list">
         <item>(select a feeling)</item>

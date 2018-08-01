@@ -84,6 +84,7 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void SuccessfulSignUp(String clientID, String verificationCode){
+        //TODO: Send Email verification using clientID and verificationCode
 
         Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
         intent.putExtra("clientID", clientID);
