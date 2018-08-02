@@ -79,4 +79,37 @@ public final class VolleyRequestsUtils {
 
         VolleyApplication.getInstance(context).addToRequestQueue(allPosts);
     }
+
+    /**
+     * Send a request to register a user and receive client id and verification code.
+     * @param context the application context
+     * @param email the email used to signup
+     * @param password the password used to signup
+     * @param callback the callback to happen when the request is processed
+     */
+    public static void register(Context context, String email, String password, final JSONObjectVolleyCallback callback) throws JSONException {
+
+        final String signupURL = "http://healthoutloud-api.herokuapp.com/registerAccount";
+        JSONObject jsonRequest = new JSONObject();
+        jsonRequest.put("email", email);
+        jsonRequest.put("password", password);
+
+        JsonObjectRequest register = new JsonObjectRequest
+                (Request.Method.POST,
+                        signupURL,
+                        jsonRequest,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                callback.onSuccess(response);
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        callback.onError(error);
+                    }
+                });
+
+        VolleyApplication.getInstance(context).addToRequestQueue(register);
+    }
 }
