@@ -18,15 +18,15 @@ import org.json.JSONObject;
 /**
  * Created by Arjun Mittal on 6/10/2018.
  */
-
 public final class VolleyRequestsUtils {
+    static String baseURL = "http://10.0.2.2:3000/";
 
     private VolleyRequestsUtils(){
     }
 
     public static void getAllPosts(Context context, final JSONArrayVolleyCallback callback) {
 
-        final String postsURL = "http://healthoutloud-api.herokuapp.com/posts";
+        final String postsURL = baseURL + "posts";
         JsonArrayRequest allPosts = new JsonArrayRequest
                 (Request.Method.GET,
                         postsURL,
@@ -56,7 +56,7 @@ public final class VolleyRequestsUtils {
      */
     public static void login(Context context, String email, String password, final JSONObjectVolleyCallback callback) throws JSONException {
 
-        final String loginURL = "http://healthoutloud-api.herokuapp.com/login";
+        final String loginURL = baseURL + "login";
         JSONObject jsonRequest = new JSONObject();
         jsonRequest.put("email", email);
         jsonRequest.put("password", password);
@@ -89,7 +89,7 @@ public final class VolleyRequestsUtils {
      */
     public static void register(Context context, String email, String password, final JSONObjectVolleyCallback callback) throws JSONException {
 
-        final String signupURL = "http://healthoutloud-api.herokuapp.com/registerAccount";
+        final String signupURL = baseURL + "registerAccount";
         JSONObject jsonRequest = new JSONObject();
         jsonRequest.put("email", email);
         jsonRequest.put("password", password);
