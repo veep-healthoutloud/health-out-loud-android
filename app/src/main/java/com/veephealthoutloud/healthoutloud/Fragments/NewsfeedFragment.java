@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -67,8 +68,23 @@ public class NewsfeedFragment extends Fragment implements View.OnClickListener, 
         return fragment;
     }
 
+
+    String tokenTest;
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+        if (savedInstanceState == null) {
+
+            Bundle extras = getActivity().getIntent().getExtras();
+            if(extras == null) {
+                tokenTest= null;
+            } else {
+                tokenTest= extras.getString("token");
+            }
+        } else {
+            tokenTest= (String) savedInstanceState.getSerializable("token");
+        }
+        System.out.println("TOKEN TEST: " + tokenTest);
         super.onCreate(savedInstanceState);
 
         feelingsAdapter = ArrayAdapter.createFromResource(getContext(), R.array.feelings_list,
@@ -79,6 +95,11 @@ public class NewsfeedFragment extends Fragment implements View.OnClickListener, 
         postsList = new ArrayList<>();
         postAdapter = new PostAdapter(getContext(), postsList, R.menu.newsfeed_posts_popup);
         GetPosts();
+
+        System.out.println("\n\n\nCreated newsfeedgragment\n\n");
+        for (int i = 0; i < postsList.size(); i++) {
+            System.out.println(i);
+        }
     }
 
     @Override
@@ -135,11 +156,40 @@ public class NewsfeedFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         // TODO: implement for when the user chooses a feeling to filter posts by
+
+        String selectedFeeling = adapterView.getSelectedItem().toString();
+        System.out.println("SELECTED FEELING: " + "WS" + selectedFeeling + "WS");
+        if (selectedFeeling != "(select a feeling)") {
+            VolleyRequestsUtils.getPostsByFeeling(tokenTest,selectedFeeling,getActivity().getApplicationContext(), new JSONArrayVolleyCallback() {
+                @Override
+                public void onSuccess(JSONArray result) {
+                    postsList.clear();
+                    ArrayList<IPost> newPosts = ParsePosts(result);
+                    for(int i = 0; i < newPosts.size(); i++){
+                        postsList.add(newPosts.get(i));
+                    }
+                    postAdapter.updateResults(postsList);
+                }
+
+                @Override
+                public void onError(VolleyError error){
+                    //TODO Handle error
+                }
+            });
+        }
+        else {
+            System.out.println("FEELING IS (select a feeling)");
+            GetPosts();
+        }
+
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
         // TODO: implement for when the user wants to view all posts
+        System.out.println("NOTHING SELECTED FUNCTION");
+        GetPosts();
+
     }
 
     /**
@@ -167,9 +217,13 @@ public class NewsfeedFragment extends Fragment implements View.OnClickListener, 
     }
 
     private void GetPosts(){
+        //String newString = tokenTest;
+        System.out.println("IN GETPOSTS, Token Test: " + tokenTest);
+
         VolleyRequestsUtils.getAllPosts(getActivity().getApplicationContext(), new JSONArrayVolleyCallback() {
                     @Override
                     public void onSuccess(JSONArray result) {
+                        //postsList.clear();
                         ArrayList<IPost> newPosts = ParsePosts(result);
                         for(int i = 0; i < newPosts.size(); i++){
                             postsList.add(newPosts.get(i));

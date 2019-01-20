@@ -35,6 +35,7 @@ MyPostsFragment.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        System.out.println("Entered OnCreate for MainActivity");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -64,9 +65,11 @@ MyPostsFragment.OnFragmentInteractionListener{
     }
 
     private void SetUpNavigationView(){
+        System.out.println("Entered SetUpNavigationView for MainActivity");
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                System.out.println("menuItem.getItemId(): " + menuItem.getItemId());
                 switch (menuItem.getItemId()){
                     case R.id.nav_newsfeed:
                         CURRENT_TAG = TAG_NEWSFEED;
@@ -103,6 +106,7 @@ MyPostsFragment.OnFragmentInteractionListener{
     }
 
     private void loadContentFragment() {
+        System.out.println("Entered loadContentFragment()");
         // selecting appropriate nav menu item
         selectNavMenuItem();
 
@@ -129,6 +133,8 @@ MyPostsFragment.OnFragmentInteractionListener{
     }
 
     private Fragment getContentFragment() {
+        System.out.println("Entered getContentFragment");
+        System.out.println("navItemIndex");
         switch (navItemIndex) {
             case 0:
                 // newsfeed

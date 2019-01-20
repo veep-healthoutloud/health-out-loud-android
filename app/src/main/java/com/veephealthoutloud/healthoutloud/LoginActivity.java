@@ -84,7 +84,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void SuccessfulLogin(String token){
-
+        System.out.println("Successful Login");
+        System.out.println(token);
         Intent intent = new Intent(LoginActivity.this,MainActivity.class);
         intent.putExtra("token", token);
         startActivity(intent);

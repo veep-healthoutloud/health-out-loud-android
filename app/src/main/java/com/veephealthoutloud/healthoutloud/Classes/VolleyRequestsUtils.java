@@ -22,6 +22,37 @@ public final class VolleyRequestsUtils {
     static String baseURL = "http://10.0.2.2:3000/";
 
     private VolleyRequestsUtils(){
+
+    }
+
+    public static void getPostsByFeeling(String ACCESS_TOKEN, String feeling, Context context, final JSONArrayVolleyCallback callback) {
+        System.out.println("IN VOLLEY, " + ACCESS_TOKEN);
+        JSONObject jsonRequest = new JSONObject();
+        //jsonRequest.put("token", ACCESS_TOKEN);
+
+        final String postsURL = baseURL + "posts/feeling/" + feeling;
+        JsonArrayRequest allPosts = new JsonArrayRequest
+                (Request.Method.GET,
+                        postsURL,
+                        null,
+                        new Response.Listener<JSONArray>() {
+                            @Override
+                            public void onResponse(JSONArray response) {
+                                System.out.println("Printing response");
+                                System.out.println(response.toString());
+                                callback.onSuccess(response);
+
+
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        callback.onError(error);
+                    }
+                });
+
+        VolleyApplication.getInstance(context).addToRequestQueue(allPosts);
+
     }
 
     public static void getAllPosts(Context context, final JSONArrayVolleyCallback callback) {
@@ -34,7 +65,11 @@ public final class VolleyRequestsUtils {
                         new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray response) {
+                                System.out.println("Printing response");
+                                System.out.println(response.toString());
                                 callback.onSuccess(response);
+
+
                             }
                         }, new Response.ErrorListener() {
                     @Override
