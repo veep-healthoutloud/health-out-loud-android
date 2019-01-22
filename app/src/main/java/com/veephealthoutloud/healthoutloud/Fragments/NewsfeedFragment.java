@@ -158,8 +158,11 @@ public class NewsfeedFragment extends Fragment implements View.OnClickListener, 
         // TODO: implement for when the user chooses a feeling to filter posts by
 
         String selectedFeeling = adapterView.getSelectedItem().toString();
+        selectedFeeling.replaceAll("\\s+","");
         System.out.println("SELECTED FEELING: " + "WS" + selectedFeeling + "WS");
-        if (selectedFeeling != "(select a feeling)") {
+        System.out.println("boolean" + selectedFeeling.equals("(select a feeling)"));
+        if (!selectedFeeling.equals("(select a feeling)")) {
+            System.out.println("SELECTED FEELING: " + selectedFeeling );
             VolleyRequestsUtils.getPostsByFeeling(tokenTest,selectedFeeling,getActivity().getApplicationContext(), new JSONArrayVolleyCallback() {
                 @Override
                 public void onSuccess(JSONArray result) {
@@ -224,6 +227,7 @@ public class NewsfeedFragment extends Fragment implements View.OnClickListener, 
                     @Override
                     public void onSuccess(JSONArray result) {
                         //postsList.clear();
+                        postsList.clear();
                         ArrayList<IPost> newPosts = ParsePosts(result);
                         for(int i = 0; i < newPosts.size(); i++){
                             postsList.add(newPosts.get(i));
